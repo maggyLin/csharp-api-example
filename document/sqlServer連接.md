@@ -9,7 +9,7 @@
 * Microsoft.EntityFrameworkCore.Tools
 
 -- cmd(vs code)
-* dotnet remove package <PACKAGE_NAME> [-v|--version <VERSION>]
+* dotnet add package <PACKAGE_NAME> [-v|--version <VERSION>]
 
 
 -- 套件查看
@@ -17,7 +17,7 @@
 * cmd : dotnet list package
 
 ## 3.使用 DataBase First (資料庫建立完成匯入專案)
-* 直接產生對應Model
+* 使用指令產生EF實體,直接產生對應Model
 
 ```
 Scaffold-DbContext "Server=伺服器位置;Database=資料庫;Trusted_Connection=True;User ID=帳號;Password=密碼" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Force
@@ -33,8 +33,10 @@ Scaffold-DbContext "Server=伺服器位置;Database=資料庫;Trusted_Connection
 ```
 * Startup.cs 資料庫物件的DI注入
 ```
-services.AddDbContext<TodoContext>(options =>
-options.UseSqlServer(Configuration.GetConnectionString("TodoDatabase")));
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddDbContext<TodoContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TodoDatabase")));
+}
 ```
 
 ## 5.資料庫更新
