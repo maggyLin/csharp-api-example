@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Todo.Dtos;
 using Todo.Models;
+using Todo.Parameters;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -61,7 +62,7 @@ namespace Todo.Controllers
                 .Select(a => new TodoListSelectDto
                 {
                     Enable = a.Enable,
-                    InsertEmployeeName = a.InsertEmployee.Name,
+                    InsertEmployeeName = a.InsertEmployee.Name, //資料表要有設定外部鍵,才能抓取,不然要使用join
                     InsertTime = a.InsertTime,
                     Name = a.Name,
                     Orders = a.Orders,
@@ -75,6 +76,13 @@ namespace Todo.Controllers
                 return NotFound();
             }
             return Ok(res);
+        }
+
+
+        [HttpGet("test/{i}")]
+        public int Get(int i)
+        {
+            return i;
         }
 
         // GET: api/<TodoController>/i/order
@@ -93,15 +101,115 @@ namespace Todo.Controllers
 
         // GET api/<TodoController>/5
         [HttpGet("{id}")]
-        public ActionResult<TodoList> Get(Guid id)
+        public TodoListSelectDto Get(Guid id)
         {
-            var result = _todoContext.TodoLists.Find(id);
-            if (result == null)
-            {
-                return NotFound("not found.");
-            }
+            var result = (from a in _todoContext.TodoLists
+                          join b in _todoContext.Employees on a.InsertEmployeeId equals b.EmployeeId
+                          join c in _todoContext.Employees on a.UpdateEmployeeId equals c.EmployeeId
+                          where a.TodoId == id
+                          select new TodoListSelectDto
+                          {
+                              Enable = a.Enable,
+                              InsertEmployeeName = b.Name,
+                              InsertTime = a.InsertTime,
+                              Name = c.Name,
+                              Orders = a.Orders,
+                              TodoId = a.TodoId,
+                              UpdateEmployeeName = a.UpdateEmployee.Name,
+                              UpdateTime = a.UpdateTime
+                          }).SingleOrDefault();  //只有1筆資料或空回傳204
             return result;
         }
+
+        [HttpGet("keyword")]
+        public IEnumerable<TodoListSelectDto> Get(string name, bool? enable, DateTime? updateTime)
+        {
+            //var res = _todoContext.TodoLists.Include(a => a.UpdateEmployee).Include(a => a.InsertEmployee)
+            //    .Select(a => new TodoListSelectDto
+            //    {
+            //        Enable = a.Enable,
+            //        InsertEmployeeName = a.InsertEmployee.Name,
+            //        InsertTime = a.InsertTime,
+            //        Name = a.Name,
+            //        Orders = a.Orders,
+            //        TodoId = a.TodoId,
+            //        UpdateEmployeeName = a.UpdateEmployee.Name,
+            //        UpdateTime = a.UpdateTime
+            //    });
+
+            //函式化DTO - 不建議在中間做轉換格式(下面where容易抱錯)->return 前
+            var res = _todoContext.TodoLists.Include(a => a.UpdateEmployee).Include(a => a.InsertEmployee)
+                //.Select(a => ItemToDto(a));
+                .Select(a => a);
+
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                res = res.Where(a => a.Name.Contains(name));
+            }
+
+            if (enable != null)
+            {
+                res = res.Where(a => a.Enable == enable);
+            }
+
+            if (updateTime != null)
+            {
+                res = res.Where(a => a.UpdateTime.Date == updateTime);
+            }
+
+            return res.ToList().Select(a => ItemToDto(a));
+        }
+
+        [HttpGet("keywordByParameter")]
+        public IEnumerable<TodoListSelectDto> Get([FromQuery] TodoSelectParameter value)
+        {
+            var res = _todoContext.TodoLists.Include(a => a.UpdateEmployee).Include(a => a.InsertEmployee)
+                .Select(a => new TodoListSelectDto
+                {
+                    Enable = a.Enable,
+                    InsertEmployeeName = a.InsertEmployee.Name,
+                    InsertTime = a.InsertTime,
+                    Name = a.Name,
+                    Orders = a.Orders,
+                    TodoId = a.TodoId,
+                    UpdateEmployeeName = a.UpdateEmployee.Name,
+                    UpdateTime = a.UpdateTime
+                });
+
+            if (!string.IsNullOrWhiteSpace(value.name))
+            {
+                res = res.Where(a => a.Name.Contains(value.name));
+            }
+
+            if (value.enable != null)
+            {
+                res = res.Where(a => a.Enable == value.enable);
+            }
+
+            if (value.updateTime != null)
+            {
+                res = res.Where(a => a.UpdateTime.Date == value.updateTime);
+            }
+
+            if (value.minOrder != null && value.maxOrder != null)
+            {
+                res = res.Where(a => a.Orders >= value.minOrder && a.Orders <= value.maxOrder);
+            }
+
+            return res;
+        }
+
+
+        [HttpGet("FromExample/{id}")]
+        //使用 [FromXXXX] 指定參數如何傳遞 , 沒有給定會自動預設
+        //EX : [FromQuery] FromExample/{id}?id=XXX (會抓取?後面給的id)
+        //EX : [FromRoute] FromExample/id (接在路徑後面)
+        //不同的參數也可以指定不同方式(一樣參數前面[]指定)
+        public dynamic GetFrom([FromQuery] string val)
+        {
+            return val;
+        }
+
 
         // POST api/<TodoController>
         [HttpPost]
@@ -161,5 +269,21 @@ namespace Todo.Controllers
 
             return NoContent();
         }
+
+        private static TodoListSelectDto ItemToDto(TodoList item)
+        {
+            return new TodoListSelectDto
+            {
+                Enable = item.Enable,
+                InsertEmployeeName = item.InsertEmployee.Name,
+                InsertTime = item.InsertTime,
+                Name = item.Name,
+                Orders = item.Orders,
+                TodoId = item.TodoId,
+                UpdateEmployeeName = item.UpdateEmployee.Name,
+                UpdateTime = item.UpdateTime
+            };
+        }
+
     }
 }
