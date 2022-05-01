@@ -15,6 +15,7 @@ namespace Todo.Dtos
         public int Orders { get; set; }
         public string InsertEmployeeName { get; set; }
         public string UpdateEmployeeName { get; set; }
+        public ICollection<UploadFileDto> UploadFiles { get; set; }
 
     }
 }

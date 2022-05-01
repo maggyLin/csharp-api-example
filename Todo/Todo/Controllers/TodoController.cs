@@ -23,19 +23,19 @@ namespace Todo.Controllers
             _todoContext = todoContext;
         }
 
-        ////GET: api/<TodoController>
-        //[HttpGet]
-        //public IEnumerable<TodoList> Get()
-        //{
-        //    //return new string[] { "value1", "value2" };
-        //    var res = _todoContext.TodoLists;
-        //    if (res == null)
-        //    {
-        //        //直接指定http status code
-        //        Response.StatusCode = 404;
-        //    }
-        //    return res;
-        //}
+        //GET: api/<TodoController>
+        [HttpGet("specificHttpCode")]
+        public IEnumerable<TodoList> Get(int i)
+        {
+            //return new string[] { "value1", "value2" };
+            var res = _todoContext.TodoLists;
+            if (res == null)
+            {
+                //直接指定http status code
+                Response.StatusCode = 404;
+            }
+            return res;
+        }
 
         //GET: api/<TodoController>
         //[HttpGet]
@@ -76,13 +76,6 @@ namespace Todo.Controllers
                 return NotFound();
             }
             return Ok(res);
-        }
-
-
-        [HttpGet("test/{i}")]
-        public int Get(int i)
-        {
-            return i;
         }
 
         // GET: api/<TodoController>/i/order
@@ -196,6 +189,36 @@ namespace Todo.Controllers
                 res = res.Where(a => a.Orders >= value.minOrder && a.Orders <= value.maxOrder);
             }
 
+            return res;
+        }
+
+        [HttpGet("includeUploadFile")]
+        public TodoListSelectDto Get(int i,Guid id)
+        {
+            //抓取對應todoid的uploadifle 資料
+            var res = (from a in _todoContext.TodoLists
+                       where a.TodoId == id
+                       select new TodoListSelectDto
+                       {
+                           Enable = a.Enable,
+                           InsertEmployeeName = a.InsertEmployee.Name,
+                           InsertTime = a.InsertTime,
+                           Name = a.Name,
+                           Orders = a.Orders,
+                           TodoId = a.TodoId,
+                           UpdateEmployeeName = a.UpdateEmployee.Name,
+                           UpdateTime = a.UpdateTime,
+                           UploadFiles = ( from b in _todoContext.UploadFiles
+                                           where a.TodoId == b.TodoId 
+                                           select new UploadFileDto
+                                           {
+                                               Name = b.Name,
+                                               Src = b.Src,
+                                               TodoId = b.TodoId,
+                                               UploadFileId = b.UploadFileId
+                                           }).ToList()
+                       }).SingleOrDefault();
+                       
             return res;
         }
 

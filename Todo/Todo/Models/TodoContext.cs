@@ -21,6 +21,7 @@ namespace Todo.Models
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<JobTitle> JobTitles { get; set; }
         public virtual DbSet<TodoList> TodoLists { get; set; }
+        public virtual DbSet<UploadFile> UploadFiles { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -109,6 +110,23 @@ namespace Todo.Models
                     .HasForeignKey(d => d.UpdateEmployeeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Todo_ToTable_1");
+            });
+
+            modelBuilder.Entity<UploadFile>(entity =>
+            {
+                entity.ToTable("UploadFile");
+
+                entity.Property(e => e.UploadFileId).HasDefaultValueSql("(newid())");
+
+                entity.Property(e => e.Name).IsRequired();
+
+                entity.Property(e => e.Src).IsRequired();
+
+                entity.HasOne(d => d.Todo)
+                    .WithMany(p => p.UploadFiles)
+                    .HasForeignKey(d => d.TodoId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_File_ToTable");
             });
 
             OnModelCreatingPartial(modelBuilder);
