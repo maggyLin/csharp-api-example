@@ -71,7 +71,7 @@ namespace Todo.Controllers
                     UpdateTime = a.UpdateTime
                 });
 
-            if (res == null)
+            if (res == null || res.Count()==0)
             {
                 return NotFound();
             }
@@ -233,6 +233,33 @@ namespace Todo.Controllers
             return val;
         }
 
+        //直接使用sql語法,不使用LINQ
+        [HttpGet("RowSqlEx")]
+        public IEnumerable<JobTitle> RowSqlEx()
+        {
+            return _todoContext.JobTitles.FromSqlRaw(" select * from JobTitle ");
+        }
+
+        //直接使用sql語法,不使用LINQ , 並指定自己設定資料格式
+        [HttpGet("RowSqlExDto")]
+        public IEnumerable<TodoListSelectDto2> RowSqlExDto()
+        {
+            string sql = @" select TodoId,
+                            a.Name,
+                            InsertTime,
+                            UpdateTime,
+                            Enable,
+                            Orders,
+                            b.Name as InsertEmployeeName , 
+                            c.Name as UpdateEmployeeName 
+                            from TodoList a 
+                            join Employee b on a.InsertEmployeeId = b.EmployeeId
+                            join Employee c on a.UpdateEmployeeId = c.EmployeeId ";
+
+            //一定要擴充TodoContexX.cs的方法才行
+            //注意抓出來資料格式要跟指定DTO相同
+            return _todoContext.ExecSQL<TodoListSelectDto2>(sql);
+        }
 
         // POST api/<TodoController>
         [HttpPost]
