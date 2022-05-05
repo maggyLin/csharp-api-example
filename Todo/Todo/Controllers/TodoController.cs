@@ -261,16 +261,6 @@ namespace Todo.Controllers
             return _todoContext.ExecSQL<TodoListSelectDto2>(sql);
         }
 
-        // POST api/<TodoController>
-        [HttpPost]
-        public ActionResult<TodoList> Post([FromBody] TodoList value)
-        {
-            _todoContext.TodoLists.Add(value);
-            _todoContext.SaveChanges();
-
-            return CreatedAtAction(nameof(Get), new { id = value.TodoId }, value);
-        }
-
         // PUT api/<TodoController>/5
         [HttpPut("{id}")]
         public IActionResult Put(Guid id, [FromBody] TodoList value)
