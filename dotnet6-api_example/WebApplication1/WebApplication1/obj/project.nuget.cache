@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Zn4+SxxZLWJafEC3vavdTpEl8LUj7dlKxxIY9mycZbqvq1r/HSWBJswIS4R0cz+DoalZSBJqaPWZHC+/oEHx0A==",
+  "dgSpecHash": "xQF9MstBEU3gi9g/5nUz3o2zHsfoRCOfJXxPgC0B7syMAlNZlXnWFxJD2bukjXDPMsc+V6xu5Gk5qXprNqWxBg==",
   "success": true,
-  "projectFilePath": "D:\\code\\csharp\\dotnet5-api-example\\dotnet6-api_example\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
+  "projectFilePath": "D:\\code\\csharp\\dotnet-api-example\\dotnet6-api_example\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\user\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",

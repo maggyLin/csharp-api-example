@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\code\\csharp\\dotnet5-api-example\\dotnet6-api_example\\WebApplication1\\WebApplication1\\WebApplication1.csproj": {}
+    "D:\\code\\csharp\\dotnet-api-example\\dotnet6-api_example\\WebApplication1\\WebApplication1\\WebApplication1.csproj": {}
   },
   "projects": {
-    "D:\\code\\csharp\\dotnet5-api-example\\dotnet6-api_example\\WebApplication1\\WebApplication1\\WebApplication1.csproj": {
+    "D:\\code\\csharp\\dotnet-api-example\\dotnet6-api_example\\WebApplication1\\WebApplication1\\WebApplication1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\code\\csharp\\dotnet5-api-example\\dotnet6-api_example\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
+        "projectUniqueName": "D:\\code\\csharp\\dotnet-api-example\\dotnet6-api_example\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
         "projectName": "WebApplication1",
-        "projectPath": "D:\\code\\csharp\\dotnet5-api-example\\dotnet6-api_example\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
+        "projectPath": "D:\\code\\csharp\\dotnet-api-example\\dotnet6-api_example\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
         "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "D:\\code\\csharp\\dotnet5-api-example\\dotnet6-api_example\\WebApplication1\\WebApplication1\\obj\\",
+        "outputPath": "D:\\code\\csharp\\dotnet-api-example\\dotnet6-api_example\\WebApplication1\\WebApplication1\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

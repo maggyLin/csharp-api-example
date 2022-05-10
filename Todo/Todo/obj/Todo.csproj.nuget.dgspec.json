@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\code\\csharp\\dotnet5-api-example\\Todo\\Todo\\Todo.csproj": {}
+    "D:\\code\\csharp\\dotnet-api-example\\Todo\\Todo\\Todo.csproj": {}
   },
   "projects": {
-    "D:\\code\\csharp\\dotnet5-api-example\\Todo\\Todo\\Todo.csproj": {
+    "D:\\code\\csharp\\dotnet-api-example\\Todo\\Todo\\Todo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\code\\csharp\\dotnet5-api-example\\Todo\\Todo\\Todo.csproj",
+        "projectUniqueName": "D:\\code\\csharp\\dotnet-api-example\\Todo\\Todo\\Todo.csproj",
         "projectName": "Todo",
-        "projectPath": "D:\\code\\csharp\\dotnet5-api-example\\Todo\\Todo\\Todo.csproj",
+        "projectPath": "D:\\code\\csharp\\dotnet-api-example\\Todo\\Todo\\Todo.csproj",
         "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "D:\\code\\csharp\\dotnet5-api-example\\Todo\\Todo\\obj\\",
+        "outputPath": "D:\\code\\csharp\\dotnet-api-example\\Todo\\Todo\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
