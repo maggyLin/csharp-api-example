@@ -35,6 +35,9 @@ namespace Todo
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Todo", Version = "v1" });
             });
 
+
+            //§ó·s localDB 
+            //Scaffold-DbContext "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\code\csharp\dotnet-api-example\localsql\Todo.mdf;Integrated Security=True;Connect Timeout=30" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Force -CoNtext TodoContext
             services.AddDbContext<TodoContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TodoDatabase")));
         }
 
