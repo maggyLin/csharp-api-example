@@ -261,38 +261,6 @@ namespace Todo.Controllers
             return _todoContext.ExecSQL<TodoListSelectDto2>(sql);
         }
 
-        // PUT api/<TodoController>/5
-        [HttpPut("{id}")]
-        public IActionResult Put(Guid id, [FromBody] TodoList value)
-        {
-
-            if (id != value.TodoId)
-            {
-                return BadRequest();
-            }
-
-            _todoContext.Entry(value).State = EntityState.Modified;
-
-            try
-            {
-                _todoContext.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!_todoContext.TodoLists.Any(e => e.TodoId == id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    return StatusCode(500, "存取發生錯誤");
-                }
-            }
-
-            //更新成功,不回傳任何內容
-            return NoContent();
-        }
-
         // DELETE api/<TodoController>/5
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
