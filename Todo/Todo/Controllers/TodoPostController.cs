@@ -43,8 +43,8 @@ namespace Todo.Controllers
             return "OK";
         }
 
-        [HttpPost("insertDtoEx")]
-        public string insertDtoEx([FromBody] TodoListInsertDto value)
+        [HttpPost("InsertDtoEx")]
+        public string InsertDtoEx([FromBody] TodoListInsertDto value)
         {
             TodoList insertData = new TodoList
             {
@@ -62,8 +62,8 @@ namespace Todo.Controllers
             return "OK";
         }
 
-        [HttpPost("insertAutoMap")]
-        public string insertAutoMap([FromBody] TodoListInsertDto value)
+        [HttpPost("InsertAutoSetVal")]
+        public string InsertAutoSetVal([FromBody] TodoListInsertDto value)
         {
             TodoList insertData = new TodoList
             {
@@ -81,8 +81,8 @@ namespace Todo.Controllers
         }
 
         // 小心sql injection
-        [HttpPost("insertBySqlScript")]
-        public string insertBySqlScript([FromBody] TodoListInsertDto value)
+        [HttpPost("InsertBySqlScript")]
+        public string InsertBySqlScript([FromBody] TodoListInsertDto value)
         {
             string sql = @"INSERT INTO [dbo].[TodoList] (
                      [Name], [InsertTime], [UpdateTime], [Enable], [Orders], [InsertEmployeeId], [UpdateEmployeeId]) 
@@ -93,8 +93,8 @@ namespace Todo.Controllers
             return "OK";
         }
 
-        [HttpPost("insertBySqlParamter")]
-        public string insertBySqlParamter([FromBody] TodoListInsertDto value)
+        [HttpPost("InsertBySqlParamter")]
+        public string InsertBySqlParamter([FromBody] TodoListInsertDto value)
         {
             //avoid sql injection
             var name = new SqlParameter("name", value.Name);

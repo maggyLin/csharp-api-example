@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Todo.Dtos;
 using Todo.Models;
 using Todo.Parameters;
-
 using System.Text.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -78,6 +77,38 @@ namespace Todo.Controllers
             return NoContent();
         }
 
+        [HttpPut("PutAutoSetVal")]
+        public IActionResult PutAutoSetVal([FromBody] TodoListPutDto1 value)
+        {
+            var update = (from a in _todoContext.TodoLists
+                          where a.TodoId == value.TodoId
+                          select a).SingleOrDefault();
 
+            if (update == null) return NotFound();
+            else
+            {
+                update.UpdateTime = DateTime.Now;
+
+                // SetValues 自動匹配欄位(注意欄位名稱)
+                _todoContext.TodoLists.Update(update).CurrentValues.SetValues(value);
+                _todoContext.SaveChanges();
+                return NoContent();
+            }
+
+        }
+
+        //多筆資料一起驗證
+        [HttpPut("ValiTest")]
+        public string ValiTest([FromBody] ValiTestDto value)
+        {
+            return "OK";
+        }
+
+        //多筆資料一起驗證
+        [HttpPut("ValiWriteInDtoTest")]
+        public string ValiWriteInDtoTest([FromBody] ValiWriteInDto value)
+        {
+            return "OK";
+        }
     }
 }

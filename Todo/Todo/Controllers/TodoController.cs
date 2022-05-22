@@ -261,23 +261,6 @@ namespace Todo.Controllers
             return _todoContext.ExecSQL<TodoListSelectDto2>(sql);
         }
 
-        // DELETE api/<TodoController>/5
-        [HttpDelete("{id}")]
-        public IActionResult Delete(Guid id)
-        {
-            var result = _todoContext.TodoLists.Find(id);
-
-            if (result == null)
-            {
-                return NotFound();
-            }
-
-            _todoContext.TodoLists.Remove(result);
-            _todoContext.SaveChanges();
-
-            return NoContent();
-        }
-
         private static TodoListSelectDto ItemToDto(TodoList item)
         {
             return new TodoListSelectDto
