@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Todo.Models;
+using Todo.Services;
 
 namespace Todo
 {
@@ -39,6 +40,14 @@ namespace Todo
             //更新 localDB 
             //Scaffold-DbContext "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\code\csharp\dotnet-api-example\localsql\Todo.mdf;Integrated Security=True;Connect Timeout=30" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Force -CoNtext TodoContext
             services.AddDbContext<TodoContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TodoDatabase")));
+
+
+            //service DI注入
+            services.AddScoped<TodoServiceTestService>();
+            //不同注入方法
+            //services.AddScoped<>() => 每次注入都是一個新的實例
+            //services.AddSingleton<>() => 每個request為一個新的實例
+            //services.AddTransient<>() => 程式運行期間只會有一個實例(伺服器重啟才會重置)
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

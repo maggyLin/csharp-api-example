@@ -263,6 +263,7 @@ namespace Todo.Controllers
 
         private static TodoListSelectDto ItemToDto(TodoList item)
         {
+            if (item == null) return null;
             return new TodoListSelectDto
             {
                 Enable = item.Enable,

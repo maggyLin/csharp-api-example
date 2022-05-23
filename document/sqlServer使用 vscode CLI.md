@@ -26,12 +26,14 @@
 * appsettings.json 中寫入連線資訊
 ```
     "ConnectionStrings": {
-        "MySQL": "server=127.0.0.1;userid=root;password=xxxxxx;database=test;"
+        "TCSDatabase": "server=ATS-DEPLOY-01;Database=ATS_Test;User=atstest;Password=atstest;"
     }
 ```
 
 ### startup.cs 注入
 services.AddDbContext<TCSContext>(options =>options.UseSqlServer(Configuration.GetConnectionString("TCSDatabase")));
 
-### you do not use startup.cs 使用 program.cs
-builder.Services.AddDbContext<JMSContext>(options => options.UseSqlServer(Configuration.GetConnectionString("YourConnectionStringKeyName_From_AppSettings.json"));
+### (.net6以上 沒有startup.cs) you do not use startup.cs 使用 program.cs
+builder.Services.AddDbContext<XXXContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("TCSDatabase")));
+
+> [TCSDatabase] 是 appsettings.json => ConnectionStrings中的資料庫名稱定義
