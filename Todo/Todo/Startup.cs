@@ -14,6 +14,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Todo.Models;
 using Todo.Services;
+using Todo.Interfaces;
 
 namespace Todo
 {
@@ -43,16 +44,28 @@ namespace Todo
 
 
             //service DI注入
-            services.AddScoped<TodoServiceTestService>();
             //不同注入方法
-            //services.AddScoped<>() => 每次注入都是一個新的實例
-            //services.AddSingleton<>() => 每個request為一個新的實例
+            //services.AddScoped<>() => 每個request為一個新的實例
+            //services.AddSingleton<>() => 每次注入都是一個新的實例
             //services.AddTransient<>() => 程式運行期間只會有一個實例(伺服器重啟才會重置)
+            services.AddScoped<TodoServiceTestService>();
+
+            //service  Ioc DI注入 <介面,要實作的方法> 1:1
+            //使用Ioc DI ,針對不同狀況可以直接更換實作
+            //services.AddScoped<IIocExampleService, IocExampleService>();
+            services.AddScoped<IIocExampleService, IocExampleService2>();
+
+            //service Ioc DI注入 <介面,要實作的方法> 1:多
+            //在程式中判斷用哪一個實作
+            services.AddScoped<IIocMultipleExampleService, IocMultipleExampleService1>();
+            services.AddScoped<IIocMultipleExampleService, IocMultipleExampleService2>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            //只有開發時才會有swagger
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
