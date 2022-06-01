@@ -49,6 +49,7 @@ namespace Todo
             //services.AddSingleton<>() => 每次注入都是一個新的實例
             //services.AddTransient<>() => 程式運行期間只會有一個實例(伺服器重啟才會重置)
             services.AddScoped<TodoServiceTestService>();
+            services.AddScoped<TodoListAsyncService>();
 
             //service  Ioc DI注入 <介面,要實作的方法> 1:1
             //使用Ioc DI ,針對不同狀況可以直接更換實作
@@ -78,6 +79,11 @@ namespace Todo
             app.UseRouting();
 
             app.UseAuthorization();
+
+            // https://docs.microsoft.com/zh-tw/aspnet/core/fundamentals/static-files?view=aspnetcore-6.0
+            //使用靜態目錄(對外可抓取目錄下資料)
+            //預設為指向 wwwroot
+            app.UseStaticFiles();
 
             app.UseEndpoints(endpoints =>
             {

@@ -122,3 +122,4 @@ D:\code\csharp\dotnet-api-example\Todo\Todo\obj\Debug\net5.0\refint\Todo.dll
 D:\code\csharp\dotnet-api-example\Todo\Todo\obj\Debug\net5.0\Todo.pdb
 D:\code\csharp\dotnet-api-example\Todo\Todo\obj\Debug\net5.0\Todo.genruntimeconfig.cache
 D:\code\csharp\dotnet-api-example\Todo\Todo\obj\Debug\net5.0\ref\Todo.dll
+D:\code\csharp\dotnet-api-example\Todo\Todo\bin\Debug\net5.0\Microsoft.AspNetCore.JsonPatch.dll
