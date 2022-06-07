@@ -15,6 +15,10 @@ using System.Threading.Tasks;
 using Todo.Models;
 using Todo.Services;
 using Todo.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace Todo
 {
@@ -43,6 +47,7 @@ namespace Todo
             services.AddDbContext<TodoContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TodoDatabase")));
 
 
+
             //service DI注入
             //不同注入方法
             //services.AddScoped<>() => 每個request為一個新的實例
@@ -60,6 +65,38 @@ namespace Todo
             //在程式中判斷用哪一個實作
             services.AddScoped<IIocMultipleExampleService, IocMultipleExampleService1>();
             services.AddScoped<IIocMultipleExampleService, IocMultipleExampleService2>();
+
+
+
+
+            //JWT 驗證 (套件安裝:Microsoft.AspNetCore.Authentication.JwtBearer)
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        //是否要驗證發行者 (要驗證JWT要寫入,參考LoginController.cs =>JWTLoginExample)
+                        ValidateIssuer = true,
+                        ValidIssuer = Configuration["Jwt:Issuer"],
+                        ValidateAudience = true,
+                        ValidAudience = Configuration["Jwt:Audience"],
+                        ValidateLifetime = true,  //是否要驗證到期時間
+                        //ClockSkew = TimeSpan.Zero, //憑證過期"不要"緩衝時間
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:KEY"])) //確認KEY
+                    };
+                });
+
+            //是否全部api都要登入驗證 , 否則返回401 (個別不需要的api要加上 [AllowAnonymous] 標籤)
+            //services.AddMvc(options =>
+            //{
+            //    options.Filters.Add(new AuthorizeFilter());
+            //});
+
+
+
+
+
+
 
         }
 

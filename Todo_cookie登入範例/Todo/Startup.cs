@@ -45,13 +45,13 @@ namespace Todo
             services.AddScoped<AsyncService>();
 
 
-            //¨C¦¸ª`¤J®É¡A³£¬O¤@­Ó·sªº¹ê¨Ò¡C
+            //ï¿½Cï¿½ï¿½ï¿½`ï¿½Jï¿½É¡Aï¿½ï¿½ï¿½Oï¿½@ï¿½Ó·sï¿½ï¿½ï¿½ï¿½Ò¡C
             services.AddSingleton<SingletonService>();
 
-            //¨C­ÓRequest¬°¦P¤@­Ó·sªº¹ê¨Ò
+            //ï¿½Cï¿½ï¿½Requestï¿½ï¿½ï¿½Pï¿½@ï¿½Ó·sï¿½ï¿½ï¿½ï¿½ï¿½
             services.AddScoped<ScopedService>();
 
-            //µ{¦¡¹B¦æ´Á¶¡¥u·|¦³¤@­Ó¹ê¨Ò
+            //ï¿½{ï¿½ï¿½ï¿½Bï¿½ï¿½ï¿½ï¿½ï¿½ï¿½uï¿½|ï¿½ï¿½ï¿½@ï¿½Ó¹ï¿½ï¿½
             services.AddTransient<TransientService>();
 
 
@@ -63,9 +63,9 @@ namespace Todo
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option =>
             {
-                //¥¼µn¤J®É·|¦Û°Ê¾É¨ì³o­Óºô§}
+                //ï¿½ï¿½ï¿½nï¿½Jï¿½É·|ï¿½Û°Ê¾É¨ï¿½oï¿½Óºï¿½ï¿½}
                 option.LoginPath = new PathString("/api/Login/NoLogin");
-                //¨S¦³Åv­­®É·|¦Û°Ê¾É¨ì³o­Óºô§}
+                //ï¿½Sï¿½ï¿½ï¿½vï¿½ï¿½ï¿½É·|ï¿½Û°Ê¾É¨ï¿½oï¿½Óºï¿½ï¿½}
                 option.AccessDeniedPath = new PathString("/api/Login/NoAccess");
                 //option.ExpireTimeSpan = TimeSpan.FromSeconds(2);
             });
@@ -89,6 +89,7 @@ namespace Todo
 
             app.UseRouting();
 
+            //cookie é©—è­‰
             app.UseCookiePolicy();
             app.UseAuthentication();
             app.UseAuthorization();

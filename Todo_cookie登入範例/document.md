@@ -93,3 +93,6 @@ public class LoginController : ControllerBase
 {
 }
 ```
+
+> 限定角色
+[Authorize(Roles ="admin")]  
